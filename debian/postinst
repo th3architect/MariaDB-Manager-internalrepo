@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ ! -h /var/www/repo/CentOS/6Server ]; then
+        ln -s /var/www/repo/CentOS/6 /var/www/repo/CentOS/6Server
+fi
+if [ ! -h /var/www/repo/CentOS6_64 ]; then
+        ln -s /var/www/repo/CentOS/6/x86_64/ /var/www/repo/CentOS6_64
+fi

@@ -1,0 +1,13 @@
+Source: mariadb-manager-internalrepo
+Maintainer: Timofey Turenko
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 8)
+
+Package: mariadb-manager-internalrepo
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: MariaDB Manager internalrepo
+ Creates repository with all packages for Galera node
+
