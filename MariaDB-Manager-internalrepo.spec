@@ -39,9 +39,10 @@ fi
 %install
 
 mkdir -p $RPM_BUILD_ROOT%{install_path}CentOS
+cp -r 6 $RPM_BUILD_ROOT%{install_path}CentOS
 
-cp -r * $RPM_BUILD_ROOT%{install_path}CentOS
-
+mkdir -p $RPM_BUILD_ROOT%{install_path}dist
+cp -r dist/* $RPM_BUILD_ROOT%{install_path}dist
 
 %clean
 
@@ -49,5 +50,6 @@ cp -r * $RPM_BUILD_ROOT%{install_path}CentOS
 %files
 %defattr(-,root,root)
 %{install_path}CentOS/*
+%{install_path}dist/*
 
 %changelog

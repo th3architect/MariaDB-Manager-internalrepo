@@ -1,1 +1,2 @@
 6 var/www/repo/CentOS
+dists ./
