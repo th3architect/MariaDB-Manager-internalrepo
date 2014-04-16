@@ -1,5 +1,7 @@
 release_info=$(cat /etc/*-release)
+echo "Distribution: $release_info"
 if [[ $(echo "$release_info" | grep 'Red Hat') != "" || $(echo "$release_info" | grep 'CentOS') ]]; then
+	echo "building for RPM"
 	packages='MariaDB-Manager-GREX MariaDB-Galera-server MariaDB-client rsync iproute net-tools grep findutils gawk'
 
 	cd /home/ec2-user
@@ -19,7 +21,7 @@ if [[ $(echo "$release_info" | grep 'Red Hat') != "" || $(echo "$release_info" |
 	done
 
 elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" | grep 'Debian') ]]; then
-
+	echo "buildng for DEB"
 	apt-get update
 	packages='mariadb-manager-grex mariadb-galera-server mariadb-client rsync iproute net-tools grep findutils gawk'
 	list_all_packages=`apt-rdepends $packages | sed "s/PreDepends://" | sed "s/Depends://" | sed "s/([^)]*)//g" | tr '\n' ' '`
