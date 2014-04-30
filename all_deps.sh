@@ -34,7 +34,14 @@ elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" 
 	list_all_packages=`apt-rdepends $packages | sed "s/PreDepends://" | sed "s/Depends://" | sed "s/([^)]*)//g" | tr '\n' ' '`
 	list_all_packages=`echo $list_all_packages | sed "s/ awk/ gawk /g" | sed "s/debconf-2.0 /debconf /g" | sed "s/libstorable-perl /perl /g" | sed "s/perlapi-5.14.2 /perl-base /g" | sed "s/perl-dbdabi-94 /libdbi-perl /g"`
 	mkdir -p  /home/ec2-user/packages/; cd  /home/ec2-user/packages/
-	apt-get download $list_all_packages
+        if [ "$deb_ver" != "6.0.7" ]; then
+                apt-get download $list_all_packages
+        else
+                rm -rf /var/cache/apt/archives/*
+                list_all_packages=`echo $list_all_packages | sed "s/debconf-english//g" | sed "s/sysv-rc//g" `
+                apt-get --download-only --reinstall -y --force-yes install  $list_all_packages
+                cp /var/cache/apt/archives/* .
+        fi
 fi
 /home/ec2-user/create_repo.sh /home/ec2-user/repo /home/ec2-user/packages
 
