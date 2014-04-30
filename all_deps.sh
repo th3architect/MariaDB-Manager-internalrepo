@@ -1,5 +1,12 @@
 release_info=$(cat /etc/*-release)
 echo "Distribution: $release_info"
+if [ -z "$release_info" ]; then
+	echo "no /etc/*-release file or it is empty, trying to check /etc/debian_version"
+	deb_ver=`cat /etc/debian_version`
+	if [ -n "$deb_ver" ]; then
+		release_info="Debian"
+	fi
+fi
 if [[ $(echo "$release_info" | grep 'Red Hat') != "" || $(echo "$release_info" | grep 'CentOS') ]]; then
 	echo "building for RPM"
 	packages='MariaDB-Manager-GREX MariaDB-Galera-server MariaDB-client rsync iproute net-tools grep findutils gawk'
