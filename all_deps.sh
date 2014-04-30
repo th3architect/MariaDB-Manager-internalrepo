@@ -33,7 +33,7 @@ elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" 
 	packages='mariadb-manager-grex mariadb-galera-server mariadb-client rsync iproute net-tools grep findutils gawk'
 	list_all_packages=`apt-rdepends $packages | sed "s/PreDepends://" | sed "s/Depends://" | sed "s/([^)]*)//g" | tr '\n' ' '`
 	list_all_packages=`echo $list_all_packages | sed "s/ awk/ gawk /g" | sed "s/debconf-2.0 /debconf /g" | sed "s/libstorable-perl /perl /g" | sed "s/perlapi-5.14.2 /perl-base /g" | sed "s/perl-dbdabi-94 /libdbi-perl /g"`
-	cd  /home/ec2-user/packages/
+	mkdir -p  /home/ec2-user/packages/; cd  /home/ec2-user/packages/
 	apt-get download $list_all_packages
 fi
 /home/ec2-user/create_repo.sh /home/ec2-user/repo /home/ec2-user/packages
