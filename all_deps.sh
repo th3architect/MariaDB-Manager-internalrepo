@@ -9,7 +9,7 @@ if [ -z "$release_info" ]; then
 fi
 if [[ $(echo "$release_info" | grep 'Red Hat') != "" || $(echo "$release_info" | grep 'CentOS') ]]; then
 	echo "building for RPM"
-	packages='MariaDB-Manager-GREX MariaDB-Galera-server MariaDB-client rsync iproute net-tools grep findutils gawk'
+	packages='MariaDB-Manager-GREX MariaDB-client rsync iproute net-tools grep findutils gawk'
 
 	cd /home/ec2-user
 	#rm -rf /home/ec2-user/packages
@@ -30,7 +30,7 @@ if [[ $(echo "$release_info" | grep 'Red Hat') != "" || $(echo "$release_info" |
 elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" | grep 'Debian') ]]; then
 	echo "buildng for DEB"
 	apt-get update
-	packages='mariadb-manager-grex mariadb-galera-server mariadb-client rsync iproute net-tools grep findutils gawk'
+	packages='mariadb-manager-grex mariadb-client rsync iproute net-tools grep findutils gawk'
 	list_all_packages=`apt-rdepends $packages | sed "s/PreDepends://" | sed "s/Depends://" | sed "s/([^)]*)//g" | tr '\n' ' '`
 	list_all_packages=`echo $list_all_packages | sed "s/ awk/ gawk /g" | sed "s/debconf-2.0 /debconf /g" | sed "s/libstorable-perl /perl /g" | sed "s/perlapi-5.14.2 /perl-base /g" | sed "s/perl-dbdabi-94 /libdbi-perl /g" | sed "s/upstart-job/upstart/g"`
 	mkdir -p  /home/ec2-user/packages/; cd  /home/ec2-user/packages/
