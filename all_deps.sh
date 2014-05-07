@@ -43,6 +43,7 @@ elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" 
 #                apt-get download $list_all_packages
 		chmod a+x y.sh
 		./y.sh
+		rm y.sh
         else
                 rm -rf /var/cache/apt/archives/*
                 list_all_packages=`echo $list_all_packages | sed "s/debconf-english//g" | sed "s/sysv-rc//g" `
@@ -52,6 +53,7 @@ elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" 
                 done
                 chmod a+x y.sh
                 ./y.sh
+		rm y.sh
 #                apt-get --download-only --reinstall -y --force-yes install  $list_all_packages
                 cp /var/cache/apt/archives/* .
         fi
