@@ -31,15 +31,28 @@ elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" 
 	echo "buildng for DEB"
 	apt-get update
 	packages='mariadb-manager-grex mariadb-galera-server mariadb-client rsync iproute net-tools grep findutils gawk'
-	list_all_packages=`apt-rdepends $packages | sed "s/PreDepends://" | sed "s/Depends://" | sed "s/([^)]*)//g" | tr '\n' ' '`
+	list_all_packages=`apt-rdepends $packages | sed "s/PreDepends://" | sed "s/Depends://" |  sed "s/ (//g" | sed "s/)//g" | sed "s/< /</g" | sed "s/> />/g" | sed "s/= /=/g"`
 	list_all_packages=`echo $list_all_packages | sed "s/ awk/ gawk /g" | sed "s/debconf-2.0 /debconf /g" | sed "s/libstorable-perl /perl /g" | sed "s/perlapi-5.14.2 /perl-base /g" | sed "s/perl-dbdabi-94 /libdbi-perl /g" | sed "s/upstart-job/upstart/g"`
 	mkdir -p  /home/ec2-user/packages/; cd  /home/ec2-user/packages/
+	rm y.sh
         if [ "$deb_ver" != "6.0.7" ]; then
-                apt-get download $list_all_packages
+		for i in $list_all_packages
+		do
+			  echo  apt-get download "$i" >> y.sh
+		done
+#                apt-get download $list_all_packages
+		chmod a+x y.sh
+		./y.sh
         else
                 rm -rf /var/cache/apt/archives/*
                 list_all_packages=`echo $list_all_packages | sed "s/debconf-english//g" | sed "s/sysv-rc//g" `
-                apt-get --download-only --reinstall -y --force-yes install  $list_all_packages
+                for i in $list_all_packages
+                do
+                          echo  "apt-get --download-only --reinstall -y --force-yes install  $i" >> y.sh
+                done
+                chmod a+x y.sh
+                ./y.sh
+#                apt-get --download-only --reinstall -y --force-yes install  $list_all_packages
                 cp /var/cache/apt/archives/* .
         fi
 fi
