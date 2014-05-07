@@ -44,6 +44,7 @@ elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" 
 		chmod a+x y.sh
 		./y.sh
 		rm y.sh
+		rm libmysqlclient18_5.5.35*
         else
                 rm -rf /var/cache/apt/archives/*
                 list_all_packages=`echo $list_all_packages | sed "s/debconf-english//g" | sed "s/sysv-rc//g" `
@@ -56,6 +57,7 @@ elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" 
 		rm y.sh
 #                apt-get --download-only --reinstall -y --force-yes install  $list_all_packages
                 cp /var/cache/apt/archives/* .
+		rm libmysqlclient18_5.5.35*
         fi
 fi
 /home/ec2-user/create_repo.sh /home/ec2-user/repo /home/ec2-user/packages
