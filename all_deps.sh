@@ -1,3 +1,4 @@
+
 release_info=$(cat /etc/*-release)
 echo "Distribution: $release_info"
 if [ -z "$release_info" ]; then
@@ -9,7 +10,7 @@ if [ -z "$release_info" ]; then
 fi
 if [[ $(echo "$release_info" | grep 'Red Hat') != "" || $(echo "$release_info" | grep 'CentOS') ]]; then
 	echo "building for RPM"
-	packages='MariaDB-Manager-GREX MariaDB-Galera-server MariaDB-client rsync iproute net-tools grep findutils gawk'
+	packages='MariaDB-Manager-GREX MariaDB-Galera-server MariaDB-client rsync iproute net-tools grep findutils gawk openssl'
 
 	cd /home/ec2-user
 	#rm -rf /home/ec2-user/packages
