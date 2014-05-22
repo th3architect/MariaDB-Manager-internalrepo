@@ -39,7 +39,7 @@ elif [[ $(echo "$release_info" | grep 'Ubuntu') != "" || $(echo "$release_info" 
         if [ "$deb_ver" != "6.0.7" ]; then
 		for i in $list_all_packages
 		do
-			  echo  apt-get download "$i" >> y.sh
+			  echo  apt-get download --allow-unauthenticated "$i" >> y.sh
 		done
 #                apt-get download $list_all_packages
 		chmod a+x y.sh
